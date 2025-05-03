@@ -1,14 +1,53 @@
 import { useState } from 'react'
 
+const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
+
+const Statistics = ({ good, neutral, bad}) => {
+	const sum = good - bad
+	const count = good + neutral + bad
+	const average = count === 0 ? 0 : sum / count
+	const positive = count === 0 ? 0 : (good / count) * 100
+
+	return (
+		<div>
+			<h1>satistics</h1>
+			<div>good {good}</div>
+			<div>neutral {neutral}</div>
+			<div>bad {bad}</div>
+			<div>average {average}</div>
+			<div>positive {positive} %</div>
+		</div>
+	)
+}
+
 const App = () => {
-  // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  const [grade, setValue] = useState(0)
+
+  const handleBadClick = () => {
+	setBad(bad + 1)
+	setValue(grade - 1)
+  }
+
+  const handleNeutralClick = () => {
+	setNeutral(neutral + 1)
+	setValue(grade + 0)
+  }
+
+  const handleGoodClick = () => {
+	setGood(good + 1)
+	setValue(grade + 1)
+  }
 
   return (
     <div>
-      code here
+		<h1> give feedback</h1>
+	  	<Button onClick={handleGoodClick} text='good' />
+	  	<Button onClick={handleNeutralClick} text='neutral' />
+	  	<Button onClick={handleBadClick} text='bad' />
+		<Statistics bad={bad} neutral={neutral} good={good} />
     </div>
   )
 }
