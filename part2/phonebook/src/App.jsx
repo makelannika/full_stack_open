@@ -1,8 +1,8 @@
-import { useState, useEffect, use } from 'react'
+import { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
-import axios from 'axios'
+import phonebookService from './services/phonebook'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -11,29 +11,45 @@ const App = () => {
   const [filter, setFilter] = useState('')
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
-      })
+    phonebookService
+      .getAll()
+      .then(initialPersons => setPersons(initialPersons))
   }, [])
 
   const addPerson = (event) => {
-      event.preventDefault()
+    event.preventDefault()
 
-      if (persons.some(person => person.name === newName)) {
-         alert(`${newName} already exists in phonebook`)
-         return
-      }
+    if (persons.some(person => person.name === newName)) {
+        alert(`${newName} already exists in phonebook`)
+        return
+    }
 
-      const personObject = {
-        name: newName,
-        number: number 
-      }
+    const personObject = {
+      name: newName,
+      number: number 
+    }
 
-      setPersons(persons.concat(personObject))
-      setNewName('')
-      setNumber('')
+    phonebookService
+      .create(personObject)
+      .then(newPerson => {
+        setPersons(persons.concat(newPerson))
+        setNewName('')
+        setNumber('')
+      }) 
+  }
+
+  const deletePerson = id => {
+    const person = persons.find(p => p.id === id)
+
+    if (!confirm(`Delete ${person.name} from phonebook?`))
+      return
+
+    phonebookService
+      .remove(id)
+      .then(setPersons(persons.filter(p => p.id !== id)))
+      .catch(err => {
+        console.log(err)
+    })
   }
 
   const handleNameChange = (event) => {
@@ -51,7 +67,9 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter filter={filter} handleFilterChange={handleFilterChange} />
+      <Filter
+        filter={filter}
+        handleFilterChange={handleFilterChange} />
       
       <h2>add a new</h2>
       <PersonForm
@@ -63,7 +81,10 @@ const App = () => {
       />
       
       <h2>Numbers</h2>
-      <Persons persons={persons} filter={filter} />
+      <Persons
+        persons={persons}
+        filter={filter}
+        handleDelete={deletePerson}/>
     </div>
   )
 }
