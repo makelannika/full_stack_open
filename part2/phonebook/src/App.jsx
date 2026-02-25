@@ -11,8 +11,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [number, setNumber] = useState('')
   const [filter, setFilter] = useState('')
-  const [error, setError] = useState(null)
-  const [success, setSuccess] = useState(null)
+  const [notification, setNotification] = useState(null)
 
   useEffect(() => {
     phonebookService
@@ -22,12 +21,15 @@ const App = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setSuccess(null)
-      setError(null)
+      setNotification(null)
     }, 5000)
 
     return () => clearTimeout(timer)
-  }, [success, error])
+  }, [notification])
+
+  const notify = (message, type) => {
+    setNotification({message, type})
+  }
 
   const clearForm = () => {
     setNewName('')
@@ -53,11 +55,11 @@ const App = () => {
           .update(existingPerson.id, personObject)
           .then(updatedPerson => {
             setPersons(persons.map(person => person.id !== updatedPerson.id ? person : updatedPerson))
-            setSuccess(`${updatedPerson.name} updated`)
+            notify(`${updatedPerson.name} updated`, 'success')
             clearForm()
           })
           .catch(() => {
-            setError(`${existingPerson.name} has already been removed from server`)
+            notify(`${existingPerson.name} has already been removed from server`, 'error')
           })
 
       return
@@ -67,7 +69,7 @@ const App = () => {
       .create(personObject)
       .then(newPerson => {
         setPersons(persons.concat(newPerson))
-        setSuccess(`Added ${newPerson.name}`)
+        notify(`Added ${newPerson.name}`, 'success')
         clearForm()
       })
   }
@@ -82,10 +84,10 @@ const App = () => {
       .remove(id)
       .then(deletedPerson => {
         setPersons(persons.filter(p => p.id !== deletedPerson.id))
-        setSuccess(`${person.name} deleted`)
+        notify(`${person.name} deleted`, 'success')
       })
       .catch(() => {
-        setError(`${person.name} has already been removed from server`)
+        notify(`${person.name} has already been removed from server`, 'error')
     })
   }
 
@@ -104,7 +106,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification error={error} success={success} />
+      <Notification notification={notification} />
       <Filter
         filter={filter}
         handleFilterChange={handleFilterChange} />
