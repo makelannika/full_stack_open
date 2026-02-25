@@ -56,6 +56,9 @@ const App = () => {
             setSuccess(`${updatedPerson.name} updated`)
             clearForm()
           })
+          .catch(() => {
+            setError(`${existingPerson.name} has already been removed from server`)
+          })
 
       return
     }
