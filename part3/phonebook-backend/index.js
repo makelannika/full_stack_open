@@ -27,7 +27,7 @@ let persons = [
 ]
 
 const generateId = () => {
-    return Math.floor(Math.random() * 1_000_000)
+    return String(Math.floor(Math.random() * 1_000_000))
 }
 
 app.get('/api/info', (request, response) => {
@@ -65,6 +65,12 @@ app.post('/api/persons', (request, response) => {
     if (!name || !number) {
         return response.status(400).json({
             error: 'Name and number required'
+        })
+    }
+
+    if (persons.some(p => p.name === name)) {
+        return response.status(400).json({
+            error: 'Name already exists in phonebook'
         })
     }
 
