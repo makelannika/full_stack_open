@@ -1,1 +1,5 @@
-GET http://localhost:3001/api/persons/2
+@dev = http://localhost:3001
+@prod = https://phonebook-khor.onrender.com
+
+@baseUrl = {{prod}}
+GET {{baseUrl}}/api/persons/3

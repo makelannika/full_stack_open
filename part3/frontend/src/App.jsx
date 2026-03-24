@@ -67,9 +67,9 @@ const App = () => {
 
     phonebookService
       .create(personObject)
-      .then(newPerson => {
-        setPersons(persons.concat(newPerson))
-        notify(`Added ${newPerson.name}`, 'success')
+      .then(({ data }) => {
+        setPersons(persons.concat(data))
+        notify(`Added ${data.name}`, 'success')
         clearForm()
       })
   }
@@ -83,7 +83,7 @@ const App = () => {
     phonebookService
       .remove(id)
       .then(() => {
-        setPersons(persons.filter(p => p.id !== person.id))
+        setPersons(persons.filter(p => p.id !== id))
         notify(`${person.name} deleted`, 'success')
       })
       .catch(() => {

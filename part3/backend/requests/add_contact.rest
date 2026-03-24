@@ -1,4 +1,9 @@
-POST http://localhost:3001/api/persons
+@dev = http://localhost:3001
+@prod = https://phonebook-khor.onrender.com
+
+@baseUrl = {{dev}}
+
+POST {{baseUrl}}/api/persons
 Content-Type: application/json
 
 {

@@ -1,1 +1,5 @@
-DELETE http://localhost:3001/api/persons/661070
+@dev = http://localhost:3001
+@prod = https://phonebook-khor.onrender.com
+
+@baseUrl = {{prod}}
+DELETE {{baseUrl}}/api/persons/2
