@@ -1,11 +1,15 @@
-const CountryList = ({ matches }) => {
+const CountryList = ({ matches, onShow }) => {
     return (
         <div>
             <ul>
                 {matches.map((country => (
-                    <div key={country.name.common}>
+                    <li key={country.name.common}>
                         {country.name.common}
-                    </div>
+                        
+                        <button onClick={() => onShow(country)}>
+                            Show
+                        </button>
+                    </li>
                 )))}
             </ul>
         </div>

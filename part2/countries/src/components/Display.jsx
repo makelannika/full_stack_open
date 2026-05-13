@@ -1,7 +1,10 @@
 import CountryInfo from "./CountryInfo"
 import CountryList from "./CountryList"
+import { useState } from "react"
 
 const Display = ({ matches }) => {
+    const [showCountry, setShowCountry] = useState(null)
+
     const count = matches.length
 
     if (count === 0) {
@@ -13,7 +16,11 @@ const Display = ({ matches }) => {
     }
     
     if (count <= 10) {
-        return <CountryList matches={matches} />
+        return (
+            showCountry
+                ? <CountryInfo country={showCountry} />
+                : <CountryList matches={matches} onShow={setShowCountry} />
+        )
     }
 
     return (

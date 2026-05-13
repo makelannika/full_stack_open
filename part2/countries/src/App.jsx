@@ -37,7 +37,7 @@ const App = () => {
   return (
     <div>
       <Search filter={filter} handleFilterChange={handleFilterChange} />
-      <Display matches={matches} />
+      <Display key={filter} matches={matches} />
     </div>
   )
 }
