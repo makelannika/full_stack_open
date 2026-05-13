@@ -6,32 +6,38 @@ import Display from './components/Display'
 const baseUrl = 'https://studies.cs.helsinki.fi/restcountries/api'
 
 const App = () => {
-  const [searched, setSearched] = useState('')
-  const [country, setCountry] = useState(null)
+  const [countries, setCountries] = useState([])
+  const [filter, setFilter] = useState('')
+
+  let matches = []
 
   useEffect(() => {
-    if (searched) {
-      console.log('fetching countries')
-      console.log(`${baseUrl}/name/${searched}`)
-      axios
-        .get(`${baseUrl}/name/${searched}`)
-        .then(response => {
-          setCountry(response.data)
-        })
-        .catch(() => {
-          console.log('error')
-        })
-    }
-  }, [searched])
+    axios
+      .get(`${baseUrl}/all`)
+      .then(response => {
+        setCountries(response.data)
+      })
+      .catch(() => {
+        console.log('could not fetch countries')
+      })
+  }, [])
 
-  const handleSearchedChange = (event) => {
-    setSearched(event.target.value)
+  if (filter) {
+    matches = countries.filter(country =>
+      country.name.common
+      .toLowerCase()
+      .includes(filter.toLowerCase())
+    )
+  }
+
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value)
   }
 
   return (
     <div>
-      <Search searched={searched} handleSearchedChange={handleSearchedChange}></Search>
-      <Display country={country}></Display>
+      <Search filter={filter} handleFilterChange={handleFilterChange} />
+      <Display matches={matches} />
     </div>
   )
 }
