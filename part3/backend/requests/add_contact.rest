@@ -8,5 +8,5 @@ Content-Type: application/json
 
 {
     "name": "new contact",
-    "number": "0000000"
+    "number": 0000000
 }
