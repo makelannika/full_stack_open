@@ -58,8 +58,8 @@ const App = () => {
             notify(`${updatedPerson.name} updated`, 'success')
             clearForm()
           })
-          .catch(() => {
-            notify(`${existingPerson.name} has already been removed from server`, 'error')
+          .catch((error) => {
+            notify(error.response?.data?.error || `${existingPerson.name} has already been removed from server`, 'error')
           })
 
       return
