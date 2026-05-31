@@ -2,4 +2,4 @@
 @prod = https://phonebook-khor.onrender.com
 
 @baseUrl = {{dev}}
-DELETE {{baseUrl}}/api/persons/6a18bd83ede55af87b4e8623
+DELETE {{baseUrl}}/api/persons/6a1c4d35e8eb41e5b2203691
