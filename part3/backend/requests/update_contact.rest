@@ -3,10 +3,10 @@
 
 @baseUrl = {{dev}}
 
-POST {{baseUrl}}/api/persons
+PUT {{baseUrl}}/api/persons/6a1afea62e4fb18b52ed4358
 Content-Type: application/json
 
 {
-    "name": "new contact",
+    "name": "Keeks",
     "number": "0000000"
 }
