@@ -67,10 +67,13 @@ const App = () => {
 
     phonebookService
       .create(personObject)
-      .then(({ data }) => {
-        setPersons(persons.concat(data))
-        notify(`Added ${data.name}`, 'success')
+      .then(newPerson => {
+        setPersons(persons.concat(newPerson))
+        notify(`Added ${newPerson.name}`, 'success')
         clearForm()
+      })
+      .catch((error) => {
+        notify(error.response.data.error, 'error')
       })
   }
 
