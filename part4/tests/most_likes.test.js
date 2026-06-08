@@ -2,7 +2,7 @@ const { test, describe } = require('node:test')
 const assert = require('node:assert')
 const listHelper = require('../utils/list_helper')
 
-describe('favorite blog', () => {
+describe('most likes (per author)', () => {
   const blogs = [
     {
       _id: '5a422a851b54a676234d17f7',
@@ -55,14 +55,14 @@ describe('favorite blog', () => {
   ]
 
   test('returns null for an empty list', () => {
-    assert.strictEqual(listHelper.favoriteBlog([]), null)
+    assert.strictEqual(listHelper.mostLikes([]), null)
   })
 
   test('returns correct value for single-item list', () => {
-    assert.deepStrictEqual(listHelper.favoriteBlog([blogs[0]]), blogs[0])
+    assert.deepStrictEqual(listHelper.mostLikes([blogs[0]]), { author: 'Michael Chan', likes: 7 })
   })
 
   test('returns correct value for multiple items', () => {
-    assert.deepStrictEqual(listHelper.favoriteBlog(blogs), blogs[2])
+    assert.deepStrictEqual(listHelper.mostLikes(blogs), { author: 'Edsger W. Dijkstra', likes: 17 })
   })
 })

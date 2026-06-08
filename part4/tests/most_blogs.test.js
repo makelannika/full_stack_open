@@ -2,7 +2,7 @@ const { test, describe } = require('node:test')
 const assert = require('node:assert')
 const listHelper = require('../utils/list_helper')
 
-describe('most blogs', () => {
+describe('most blogs (per author)', () => {
   const blogs = [
     {
       _id: '5a422a851b54a676234d17f7',
@@ -54,15 +54,15 @@ describe('most blogs', () => {
     }
   ]
 
-  test('of empty list is null', () => {
+  test('returns null for an empty list', () => {
     assert.strictEqual(listHelper.mostBlogs([]), null)
   })
 
-  test('of list of one is correct', () => {
+  test('returns correct value for single-item list', () => {
     assert.deepStrictEqual(listHelper.mostBlogs([blogs[0]]), { author: 'Michael Chan', blogs: 1 })
   })
 
-  test('of list of multiple is correct', () => {
+  test('returns correct value for multiple items', () => {
     assert.deepStrictEqual(listHelper.mostBlogs(blogs), { author: 'Robert C. Martin', blogs: 3 } )
   })
 })

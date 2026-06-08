@@ -54,15 +54,15 @@ describe('total likes', () => {
     }
   ]
 
-  test('of empty list is zero', () => {
+  test('returns 0 for an empty list', () => {
     assert.strictEqual(listHelper.totalLikes([]), 0)
   })
 
-  test('of list of one is correct', () => {
+  test('returns correct value for single-item list', () => {
     assert.strictEqual(listHelper.totalLikes([blogs[0]]), 7)
   })
 
-  test('of list of multiple is correct', () => {
+  test('returns correct value for multiple items', () => {
     assert.strictEqual(listHelper.totalLikes(blogs), 36)
   })
 })
