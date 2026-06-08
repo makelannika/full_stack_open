@@ -58,11 +58,11 @@ describe('total likes', () => {
     assert.strictEqual(listHelper.totalLikes([]), 0)
   })
 
-  test('of one blog is correct', () => {
+  test('of list of one is correct', () => {
     assert.strictEqual(listHelper.totalLikes([blogs[0]]), 7)
   })
 
-  test('of multiple blogs is correct', () => {
+  test('of list of multiple is correct', () => {
     assert.strictEqual(listHelper.totalLikes(blogs), 36)
   })
 })
