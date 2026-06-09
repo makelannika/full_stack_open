@@ -5,11 +5,13 @@ const initialBlogs = [
     title: 'Type wars',
     author: 'Robert C. Martin',
     url: 'url',
+    likes: 2,
   },
   {
     title: 'Cat thoughts',
     author: 'Kleo',
     url: 'url',
+    likes: 9,
   }
 ]
 
