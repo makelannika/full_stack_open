@@ -4,11 +4,53 @@ const supertest = require('supertest')
 const app = require('../app')
 const assert = require('node:assert')
 const Blog = require('../models/blog')
+const User = require('../models/user')
 const helper = require('./test_helper')
 
 const api = supertest(app)
 
-describe('When there are blogs initially saved', () => {
+describe('when there are users initially saved', () => {
+  beforeEach(async () => {
+    await User.deleteMany({})
+    await User.insertMany(await helper.initialUsers())
+  })
+
+  describe('when fetching users', () => {
+    test('all users are returned', async () => {
+      const response = await api.get('/api/users')
+
+      const users = await helper.usersInDb()
+
+      console.log('USERS:')
+      console.log(response.body)
+      assert.strictEqual(response.body.length, users.length)
+    })
+  })
+
+  describe('adding a user', () => {
+    test('succeeds with status code 201 with valid user', async () => {
+      const usersAtStart = await helper.usersInDb()
+
+      const user = {
+        username: 'testUser',
+        password: 'testpswd',
+        name: 'test user',
+      }
+
+      await api
+        .post('/api/users')
+        .send(user)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+
+      const usersAtEnd = await helper.usersInDb()
+
+      assert.strictEqual(usersAtEnd.length, usersAtStart.length + 1)
+    })
+  })
+})
+
+describe('when there are blogs initially saved', () => {
   beforeEach(async () => {
     await Blog.deleteMany({})
     await Blog.insertMany(helper.initialBlogs)
