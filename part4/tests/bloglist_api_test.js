@@ -21,8 +21,6 @@ describe('when there are users initially saved', () => {
 
       const users = await helper.usersInDb()
 
-      console.log('USERS:')
-      console.log(response.body)
       assert.strictEqual(response.body.length, users.length)
     })
   })
@@ -31,7 +29,7 @@ describe('when there are users initially saved', () => {
     test('succeeds with status code 201 with valid user', async () => {
       const usersAtStart = await helper.usersInDb()
 
-      const user = {
+      const newUser = {
         username: 'testUser',
         password: 'testpswd',
         name: 'test user',
@@ -39,13 +37,16 @@ describe('when there are users initially saved', () => {
 
       await api
         .post('/api/users')
-        .send(user)
+        .send(newUser)
         .expect(201)
         .expect('Content-Type', /application\/json/)
 
       const usersAtEnd = await helper.usersInDb()
 
       assert.strictEqual(usersAtEnd.length, usersAtStart.length + 1)
+
+      const usernames = usersAtEnd.map(u => u.username)
+      assert(usernames.includes(newUser.username))
     })
   })
 })
