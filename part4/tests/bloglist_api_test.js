@@ -48,6 +48,48 @@ describe('when there are users initially saved', () => {
       const usernames = usersAtEnd.map(u => u.username)
       assert(usernames.includes(newUser.username))
     })
+
+    test('fails with status code 400 with password less than 3 characters', async () => {
+      const usersAtStart = await helper.usersInDb()
+
+      const newUser = {
+        username: 'testUser',
+        password: 'te',
+        name: 'test user',
+      }
+
+      const response = await api
+        .post('/api/users')
+        .send(newUser)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+
+      const usersAtEnd = await helper.usersInDb()
+
+      assert(response.body.error.includes('password must be at least 3 characters'))
+      assert.strictEqual(usersAtEnd.length, usersAtStart.length)
+    })
+
+    test('fails with status code 400 with username that\'s already taken', async () => {
+      const usersAtStart = await helper.usersInDb()
+
+      const newUser = {
+        username: 'Keke',
+        password: 'kekespswd',
+        name: 'Kleo'
+      }
+
+      const response = await api
+        .post('/api/users')
+        .send(newUser)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+
+      const usersAtEnd = await helper.usersInDb()
+
+      assert(response.body.error.includes('username must be unique'))
+      assert.strictEqual(usersAtEnd.length, usersAtStart.length)
+    })
   })
 })
 
