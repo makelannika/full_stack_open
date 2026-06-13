@@ -5,36 +5,42 @@ const bcrypt = require('bcrypt')
 const initialUsers = async () => {
   return [
     {
-      username: 'Rob',
-      passwordHash: await bcrypt.hash('robspswd', 10),
-      name: 'Robert',
+      username: 'Alice',
+      passwordHash: await bcrypt.hash('alicespswd', 10),
+      name: 'Alice',
     },
     {
-      username: 'Keke',
-      passwordHash: await bcrypt.hash('kekespswd', 10),
-      name: 'Kleo',
+      username: 'Bob',
+      passwordHash: await bcrypt.hash('bobspswd', 10),
+      name: 'Bob',
     }
   ]
 }
 
-const initialBlogs = [
-  {
-    title: 'Type wars',
-    author: 'Robert C. Martin',
-    url: 'url',
-    likes: 2,
-  },
-  {
-    title: 'Cat thoughts',
-    author: 'Kleo',
-    url: 'url',
-    likes: 9,
-  }
-]
-
 const usersInDb = async () => {
   const users = await User.find({})
   return users.map(user => user.toJSON())
+}
+
+const initialBlogs = async () => {
+  const users = await usersInDb()
+
+  return [
+    {
+      url: 'url',
+      title: 'Type wars',
+      author: 'Robert C. Martin',
+      user: users[0].id,
+      likes: 2
+    },
+    {
+      url: 'url',
+      title: 'Cat thoughts',
+      author: 'Kleo',
+      user: users[0].id,
+      likes: 9
+    }
+  ]
 }
 
 const blogsInDb = async () => {

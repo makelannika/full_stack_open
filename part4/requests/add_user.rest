@@ -1,0 +1,13 @@
+@dev = http://localhost:3003
+# @prod = 
+
+@baseUrl = {{dev}}
+
+POST {{baseUrl}}/api/users
+Content-Type: application/json
+
+{
+    "username": "testUser",
+    "password": "salasana",
+    "name": "test user"
+}

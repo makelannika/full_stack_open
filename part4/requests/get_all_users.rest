@@ -1,0 +1,7 @@
+@dev = http://localhost:3003
+# @prod = 
+
+@baseUrl = {{dev}}
+
+GET {{baseUrl}}/api/users
+

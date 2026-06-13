@@ -21,6 +21,8 @@ describe('when there are users initially saved', () => {
 
       const users = await helper.usersInDb()
 
+      console.log('USERS:')
+      console.log(response.body)
       assert.strictEqual(response.body.length, users.length)
     })
   })
@@ -32,7 +34,7 @@ describe('when there are users initially saved', () => {
       const newUser = {
         username: 'testUser',
         password: 'testpswd',
-        name: 'test user',
+        name: 'test user'
       }
 
       await api
@@ -55,7 +57,7 @@ describe('when there are users initially saved', () => {
       const newUser = {
         username: 'testUser',
         password: 'te',
-        name: 'test user',
+        name: 'test user'
       }
 
       const response = await api
@@ -70,13 +72,13 @@ describe('when there are users initially saved', () => {
       assert.strictEqual(usersAtEnd.length, usersAtStart.length)
     })
 
-    test('fails with status code 400 with username that\'s already taken', async () => {
+    test('fails with status code 400 if username is already taken', async () => {
       const usersAtStart = await helper.usersInDb()
 
       const newUser = {
-        username: 'Keke',
-        password: 'kekespswd',
-        name: 'Kleo'
+        username: 'Bob',
+        password: 'bobspswd',
+        name: 'Bob'
       }
 
       const response = await api
@@ -96,7 +98,7 @@ describe('when there are users initially saved', () => {
 describe('when there are blogs initially saved', () => {
   beforeEach(async () => {
     await Blog.deleteMany({})
-    await Blog.insertMany(helper.initialBlogs)
+    await Blog.insertMany(await helper.initialBlogs())
   })
 
   describe('when fetching blogs', () => {
@@ -110,7 +112,9 @@ describe('when there are blogs initially saved', () => {
     test('all blogs are returned', async () => {
       const response = await api.get('/api/blogs')
 
-      assert.strictEqual(response.body.length, helper.initialBlogs.length)
+      const blogs = await helper.blogsInDb()
+
+      assert.strictEqual(response.body.length, blogs.length)
     })
 
     test('blogs\' id field is \'id\' not \'_id\'', async () => {
@@ -126,6 +130,8 @@ describe('when there are blogs initially saved', () => {
 
   describe('adding a new blog', () => {
     test('succeeds with status code 201 with valid data', async () => {
+      const blogsAtStart = await helper.blogsInDb()
+
       const newBlog = {
         title: 'pspsps',
         author: 'Kleo',
@@ -143,7 +149,7 @@ describe('when there are blogs initially saved', () => {
 
       assert.strictEqual(
         blogsAtEnd.length,
-        helper.initialBlogs.length + 1
+        blogsAtStart.length + 1
       )
 
       assert.strictEqual(response.body.title, newBlog.title)
@@ -152,6 +158,7 @@ describe('when there are blogs initially saved', () => {
     })
 
     test('fails with status code 400 if title is missing', async () => {
+      const blogsAtStart = await helper.blogsInDb()
       const newBlog = { url: 'Missing title' }
 
       await api
@@ -161,10 +168,11 @@ describe('when there are blogs initially saved', () => {
 
       const blogsAtEnd = await helper.blogsInDb()
 
-      assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
+      assert.strictEqual(blogsAtEnd.length, blogsAtStart.length)
     })
 
     test('fails with status code 400 if url is missing', async () => {
+      const blogsAtStart = await helper.blogsInDb()
       const newBlog = { title: 'Missing url' }
 
       await api
@@ -174,7 +182,7 @@ describe('when there are blogs initially saved', () => {
 
       const blogsAtEnd = await helper.blogsInDb()
 
-      assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
+      assert.strictEqual(blogsAtEnd.length, blogsAtStart.length)
     })
 
     test('if not defined, likes are set to 0', async () => {
@@ -208,7 +216,7 @@ describe('when there are blogs initially saved', () => {
       const ids = blogsAtEnd.map(b => b.id)
       assert(!ids.includes(blogToDelete.id))
 
-      assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length - 1)
+      assert.strictEqual(blogsAtEnd.length, blogsAtStart.length - 1)
     })
   })
 

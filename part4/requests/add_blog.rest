@@ -7,8 +7,8 @@ POST {{baseUrl}}/api/blogs
 Content-Type: application/json
 
 {
-    "title": "test blog",
-    "author": "test author",
-    "url": "test url",
+    "url": "new url",
+    "title": "new blog",
+    "author": "new author",
     "likes": 0
 }
