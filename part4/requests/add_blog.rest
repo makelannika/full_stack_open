@@ -5,10 +5,11 @@
 
 POST {{baseUrl}}/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RVc2VyIiwiaWQiOiI2YTJkMzE2ZjcyZTU3NGIyNzVhYzgxNzIiLCJpYXQiOjE3ODYwMjc4NTl9.ew_NlFjjCr6o1qZNEUOQ57vkimNusc7xgHUMrZsXl88
 
 {
-    "url": "new url",
-    "title": "new blog",
-    "author": "new author",
+    "url": "url",
+    "title": "with token",
+    "author": "author",
     "likes": 0
 }
