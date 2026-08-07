@@ -1,0 +1,7 @@
+@dev = http://localhost:3003
+# @prod = 
+
+@baseUrl = {{dev}}
+
+DELETE {{baseUrl}}/api/blogs/6a760567f8fb005956a6832a
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imtla2UiLCJpZCI6IjZhNzYzN2FlMDEwOGUzNjczM2IxOWM5MiIsImlhdCI6MTc4NjEzMjQxOH0.w9_cCQMUmE6dMkC8phQEKp_JWBvvN-ly9CULiEGxuoA
