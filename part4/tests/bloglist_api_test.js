@@ -9,6 +9,7 @@ const helper = require('./test_helper')
 
 const api = supertest(app)
 
+// user tests
 describe('when there are users initially saved', () => {
   beforeEach(async () => {
     await User.deleteMany({})
@@ -21,8 +22,6 @@ describe('when there are users initially saved', () => {
 
       const users = await helper.usersInDb()
 
-      console.log('USERS:')
-      console.log(response.body)
       assert.strictEqual(response.body.length, users.length)
     })
   })
@@ -95,10 +94,25 @@ describe('when there are users initially saved', () => {
   })
 })
 
+// blog tests
 describe('when there are blogs initially saved', () => {
+  let token
+
   beforeEach(async () => {
     await Blog.deleteMany({})
     await Blog.insertMany(await helper.initialBlogs())
+
+    const user = {
+      username: 'Alice',
+      password: 'alicespswd',
+    }
+
+    const response = await api
+      .post('/api/login')
+      .send(user)
+      .expect(200)
+
+    token = response.body.token
   })
 
   describe('when fetching blogs', () => {
@@ -141,6 +155,7 @@ describe('when there are blogs initially saved', () => {
 
       const response = await api
         .post('/api/blogs')
+        .set('Authorization', `Bearer ${token}`)
         .send(newBlog)
         .expect(201)
         .expect('Content-Type', /application\/json/)
@@ -157,12 +172,38 @@ describe('when there are blogs initially saved', () => {
       assert.strictEqual(response.body.url, newBlog.url)
     })
 
+    test('fails with status code 401 if token is missing', async () => {
+      const blogsAtStart = await helper.blogsInDb()
+
+      const newBlog = {
+        title: 'pspsps',
+        author: 'Kleo',
+        url: 'url',
+        likes: 100,
+      }
+
+      const response = await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(401)
+
+      const blogsAtEnd = await helper.blogsInDb()
+
+      assert.strictEqual(
+        blogsAtStart.length,
+        blogsAtEnd.length
+      )
+
+      assert(response.body.error.includes('Unauthorized'))
+    })
+
     test('fails with status code 400 if title is missing', async () => {
       const blogsAtStart = await helper.blogsInDb()
       const newBlog = { url: 'Missing title' }
 
       await api
         .post('/api/blogs')
+        .set('Authorization', `Bearer ${token}`)
         .send(newBlog)
         .expect(400)
 
@@ -177,6 +218,7 @@ describe('when there are blogs initially saved', () => {
 
       await api
         .post('/api/blogs')
+        .set('Authorization', `Bearer ${token}`)
         .send(newBlog)
         .expect(400)
 
@@ -194,6 +236,7 @@ describe('when there are blogs initially saved', () => {
 
       const response = await api
         .post('/api/blogs')
+        .set('Authorization', `Bearer ${token}`)
         .send(newBlog)
         .expect(201)
         .expect('Content-Type', /application\/json/)
@@ -209,6 +252,7 @@ describe('when there are blogs initially saved', () => {
 
       await api
         .delete(`/api/blogs/${blogToDelete.id}`)
+        .set('Authorization', `Bearer ${token}`)
         .expect(204)
 
       const blogsAtEnd = await helper.blogsInDb()
