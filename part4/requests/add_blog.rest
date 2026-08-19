@@ -5,11 +5,11 @@
 
 POST {{baseUrl}}/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RVc2VyIiwiaWQiOiI2YTJkMzE2ZjcyZTU3NGIyNzVhYzgxNzIiLCJpYXQiOjE3ODYxMzIyMDd9.0A-ouYamO_47EHGCY8jagMDfLCyszGktTAFOqYmnN5g
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZpcnN0IiwiaWQiOiI2YTg1Nzc2Y2FmNGVmN2VmZDZlZWFiOWYiLCJpYXQiOjE3ODcxMzE4NDZ9.fgZBUTAcGcrSsXMJtoM5VBIiXoLKwCzcksuUrgJPV2U
 
 {
-    "url": "url",
-    "title": "with userExtractor",
-    "author": "author",
+    "url": "yet another url",
+    "title": "yet another title",
+    "author": "yet another author",
     "likes": 0
 }

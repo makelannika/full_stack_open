@@ -3,5 +3,5 @@
 
 @baseUrl = {{dev}}
 
-DELETE {{baseUrl}}/api/blogs/6a8465ee2b3506dbe8619f40
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RVc2VyIiwiaWQiOiI2YTJkMzE2ZjcyZTU3NGIyNzVhYzgxNzIiLCJpYXQiOjE3ODYxMzIyMDd9.0A-ouYamO_47EHGCY8jagMDfLCyszGktTAFOqYmnN5g
+DELETE {{baseUrl}}/api/blogs/6a8578d4af4ef7efd6eeaba4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZpcnN0IiwiaWQiOiI2YTg1Nzc2Y2FmNGVmN2VmZDZlZWFiOWYiLCJpYXQiOjE3ODcxMzE4NDZ9.fgZBUTAcGcrSsXMJtoM5VBIiXoLKwCzcksuUrgJPV2U
