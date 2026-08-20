@@ -5,10 +5,12 @@ import loginService from './services/login'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import BlogList from './components/BlogList'
+import Notification from './components/Notification'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
+  const [notification, setNotification] = useState(null)
 
   useEffect(() => {
     const loggedUser = window.localStorage.getItem('loggedUser')
@@ -26,6 +28,18 @@ const App = () => {
     )  
   }, [])
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setNotification(null)
+    }, 3000)
+
+    return () => clearTimeout(timer)
+  }, [notification])
+
+  const notify = (message, type) => {
+    setNotification({ message, type })
+  }
+
   const handleLogin = async credentials => {
     try {
       const user = await loginService.login(credentials)
@@ -36,6 +50,7 @@ const App = () => {
 
     } catch (err) {
       console.log(err)
+      notify('wrong username or password', 'error')
     }
   }
 
@@ -53,6 +68,7 @@ const App = () => {
       const updatedlist = blogs.concat(created)
       setBlogs(updatedlist)
 
+      notify(`a new blog ${created.title} by ${created.author} added`, 'success')
     } catch (err) {
       console.log(err)
     }
@@ -60,17 +76,18 @@ const App = () => {
 
   return (
     <div>
-      {!user && <LoginForm onLogin={handleLogin}/>}
+      {!user && <LoginForm onLogin={handleLogin} notification={notification} />}
       
       {user && (
         <div>
           <h2>blogs</h2>
+          <Notification notification={notification} />
           <p>
             {user.name} logged in
             <button onClick={handleLogout}>logout</button>
           </p>
-          <BlogForm onCreate={createBlog}/>
-          <BlogList blogs={blogs}></BlogList>
+          <BlogForm onCreate={createBlog} />
+          <BlogList blogs={blogs} />
         </div>
         )}
     </div>
