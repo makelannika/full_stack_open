@@ -1,4 +1,4 @@
-const BlogInfo = ({ blog }) => {
+const BlogInfo = ({ blog, onLike }) => {
     const { url, likes, user } = blog
 
     return (
@@ -6,7 +6,7 @@ const BlogInfo = ({ blog }) => {
             <div>{url}</div>
             <div>
                 likes {likes}
-                <button>like</button>
+                <button onClick={() => onLike(blog)} >like</button>
             </div>
             <div>{user.username}</div>
         </div>
