@@ -80,20 +80,20 @@ const App = () => {
   }
 
   const handleLike = async blog => {
-      const blogToUpdate = {
-          ...blog,
-          likes: blog.likes + 1
-      }
+    const blogToUpdate = {
+        ...blog,
+        likes: blog.likes + 1
+    }
 
-      try {
-          const updatedBlog = await blogService.update(blog.id, blogToUpdate)
+    try {
+        const updatedBlog = await blogService.update(blog.id, blogToUpdate)
 
-          setBlogs(blogs.map(blog => 
-            blog.id === updatedBlog.id ? updatedBlog : blog
-          ))
-      } catch (err) {
-          console.log(err)
-      }
+        setBlogs(blogs.map(blog => 
+          blog.id === updatedBlog.id ? updatedBlog : blog
+        ))
+    } catch (err) {
+        console.log(err)
+    }
   }
 
   return (
