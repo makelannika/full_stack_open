@@ -1,5 +1,5 @@
-import { useState } from "react"
-import BlogInfo from "./BlogInfo"
+import { useState } from 'react'
+import BlogInfo from './BlogInfo'
 
 const Blog = ({ blog, onLike, onRemove }) => {
   const blogStyle = {
@@ -18,9 +18,9 @@ const Blog = ({ blog, onLike, onRemove }) => {
       <button onClick={() => setVisible(!visible)}>
         {visible ? 'hide' : 'view'}
       </button>
-      
+
       {visible && <BlogInfo blog={blog} onLike={onLike} onRemove={onRemove} />}
-    </div>  
+    </div>
   )
 }
 

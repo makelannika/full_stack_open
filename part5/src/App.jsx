@@ -88,18 +88,18 @@ const App = () => {
 
   const handleLike = async blog => {
     const blogToUpdate = {
-        ...blog,
-        likes: blog.likes + 1
+      ...blog,
+      likes: blog.likes + 1
     }
 
     try {
-        const updatedBlog = await blogService.update(blog.id, blogToUpdate)
+      const updatedBlog = await blogService.update(blog.id, blogToUpdate)
 
-        setBlogs(blogs.map(blog => 
-          blog.id === updatedBlog.id ? updatedBlog : blog
-        ))
+      setBlogs(blogs.map(blog =>
+        blog.id === updatedBlog.id ? updatedBlog : blog
+      ))
     } catch (err) {
-        console.log(err)
+      console.log(err)
     }
   }
 
@@ -120,7 +120,7 @@ const App = () => {
   return (
     <div>
       {!user && <LoginForm onLogin={handleLogin} notification={notification} />}
-      
+
       {user && (
         <div>
           <h2>blogs</h2>
@@ -134,7 +134,7 @@ const App = () => {
           </Togglable>
           <BlogList blogs={blogs} onLike={handleLike} onRemove={handleRemove} />
         </div>
-        )}
+      )}
     </div>
   )
 }
