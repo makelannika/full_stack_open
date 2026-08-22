@@ -1,12 +1,12 @@
 import Blog from "./Blog"
 
-const BlogList = ({ blogs, onLike }) => {
-    const sortedList = blogs.sort((a, b) => a.likes - b.likes).reverse()
+const BlogList = ({ blogs, onLike, onRemove }) => {
+    const sortedList = [...blogs].sort((a, b) => b.likes - a.likes)
 
     return (
         <div>
             {sortedList.map(blog =>
-                <Blog key={blog.id} blog={blog} onLike={onLike} />
+                <Blog key={blog.id} blog={blog} onLike={onLike} onRemove={onRemove} />
             )}
         </div>
     )

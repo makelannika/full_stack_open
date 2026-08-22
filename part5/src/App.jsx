@@ -26,9 +26,16 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
+    const fetchBlogs = async () => {
+      try {
+        const blogs = await blogService.getAll()
+        setBlogs(blogs)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    fetchBlogs()
   }, [])
 
   useEffect(() => {
@@ -96,6 +103,20 @@ const App = () => {
     }
   }
 
+  const handleRemove = async blog => {
+    if (!confirm(`Remove blog ${blog.title} by ${blog.author}`))
+      return
+
+    try {
+      await blogService.remove(blog.id)
+
+      const updatedList = blogs.filter(b => b.id !== blog.id)
+      setBlogs(updatedList)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
     <div>
       {!user && <LoginForm onLogin={handleLogin} notification={notification} />}
@@ -111,7 +132,7 @@ const App = () => {
           <Togglable buttonLabel="create new blog" ref={blogFormRef}>
             <BlogForm onCreate={createBlog} />
           </Togglable>
-          <BlogList blogs={blogs} onLike={handleLike} />
+          <BlogList blogs={blogs} onLike={handleLike} onRemove={handleRemove} />
         </div>
         )}
     </div>
