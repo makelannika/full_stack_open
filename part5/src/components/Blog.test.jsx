@@ -30,12 +30,12 @@ test('renders title and author by default', () => {
   expect(likesElement).toBeNull()
 })
 
-test('renders url likes and user when view button is clicked', async () => {
+test('renders url, likes and user when view button is clicked', async () => {
   render(<Blog blog={blog} loggedUser={loggedUser} />)
 
   const user = userEvent.setup()
-  const button = screen.getByText('view')
-  await user.click(button)
+  const view = screen.getByText('view')
+  await user.click(view)
 
   const urlElement = screen.getByText('url')
   const likesElement = screen.getByText('likes 5')

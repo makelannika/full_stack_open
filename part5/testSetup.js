@@ -1,17 +1,6 @@
-import { afterEach, beforeEach } from 'vitest'
+import { afterEach } from 'vitest'
 import { cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
-
-beforeEach(() => {
-  window.localStorage.setItem(
-    'loggedUser',
-    JSON.stringify({
-      username: 'user',
-      name: 'user',
-      token: 'token',
-    })
-  )
-})
 
 afterEach(() => {
   cleanup()
