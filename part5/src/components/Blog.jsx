@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import BlogInfo from './BlogInfo'
 
-const Blog = ({ blog, onLike, onRemove }) => {
+const Blog = ({ blog, loggedUser, onLike, onRemove }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -19,7 +19,11 @@ const Blog = ({ blog, onLike, onRemove }) => {
         {visible ? 'hide' : 'view'}
       </button>
 
-      {visible && <BlogInfo blog={blog} onLike={onLike} onRemove={onRemove} />}
+      {visible && <BlogInfo
+        blog={blog}
+        loggedUser={loggedUser}
+        onLike={onLike}
+        onRemove={onRemove} />}
     </div>
   )
 }

@@ -2,6 +2,10 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
 
+const loggedUser = {
+  username: 'user'
+}
+
 const blog = {
   url: 'url',
   title: 'title',
@@ -27,7 +31,7 @@ test('renders title and author by default', () => {
 })
 
 test('renders url likes and user when view button is clicked', async () => {
-  render(<Blog blog={blog} />)
+  render(<Blog blog={blog} loggedUser={loggedUser} />)
 
   const user = userEvent.setup()
   const button = screen.getByText('view')

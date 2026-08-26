@@ -1,8 +1,5 @@
-const BlogInfo = ({ blog, onLike, onRemove }) => {
+const BlogInfo = ({ blog, loggedUser, onLike, onRemove }) => {
   const { url, likes, user } = blog
-
-  const loggedUserJSON = window.localStorage.getItem('loggedUser')
-  const loggedUser = JSON.parse(loggedUserJSON)
   const showRemove = loggedUser.username === user.username
 
   return (
