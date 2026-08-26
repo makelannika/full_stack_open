@@ -24,9 +24,9 @@ test('onLike handler is called when like button is clicked', async () => {
   render(<BlogInfo blog={blog} loggedUser={loggedUser} onLike={mockLike} />)
 
   const user = userEvent.setup()
-  const like = screen.getByText('like')
-  await user.click(like)
-  await user.click(like)
+  const likeButton = screen.getByText('like')
+  await user.click(likeButton)
+  await user.click(likeButton)
 
   expect(mockLike.mock.calls).toHaveLength(2)
 })

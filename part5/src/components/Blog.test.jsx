@@ -34,8 +34,8 @@ test('renders url, likes and user when view button is clicked', async () => {
   render(<Blog blog={blog} loggedUser={loggedUser} />)
 
   const user = userEvent.setup()
-  const view = screen.getByText('view')
-  await user.click(view)
+  const viewButton = screen.getByText('view')
+  await user.click(viewButton)
 
   const urlElement = screen.getByText('url')
   const likesElement = screen.getByText('likes 5')
