@@ -40,6 +40,4 @@ test('renders url likes and user when view button is clicked', async () => {
   expect(urlElement).toBeDefined()
   expect(likesElement).toBeDefined()
   expect(userElement).toBeDefined()
-
-  screen.debug()
 })
